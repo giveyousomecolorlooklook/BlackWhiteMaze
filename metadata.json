@@ -1,0 +1,5 @@
+{
+  "name": "AmazeGen - Pro Maze Generator",
+  "description": "A high-performance maze terrain generator that creates perfectly connected paths using recursive backtracking. Features customizable dimensions, AI-powered theme suggestions, and high-quality image exports.",
+  "requestFramePermissions": []
+}
