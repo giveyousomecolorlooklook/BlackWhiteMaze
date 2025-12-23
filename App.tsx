@@ -20,6 +20,7 @@ const App: React.FC = () => {
   const generateMaze = useCallback(() => {
     setIsGenerating(true);
     
+    // 基础参数校验
     const actualWidth = Math.max(20, config.width);
     const actualHeight = Math.max(20, config.height);
 
@@ -115,6 +116,7 @@ const App: React.FC = () => {
 
     setMaze({ grid, width: actualWidth, height: actualHeight });
     setIsGenerating(false);
+    // 重置故事，除非是缩放调整
     setLore('');
   }, [config.width, config.height, config.density]);
 
@@ -135,9 +137,10 @@ const App: React.FC = () => {
     link.click();
   };
 
+  // 核心变更：监听 generateMaze 的变化，实现拖动即生成
   useEffect(() => {
     generateMaze();
-  }, []);
+  }, [generateMaze]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
@@ -146,7 +149,7 @@ const App: React.FC = () => {
           AmazeGen <span className="text-indigo-500">Dual</span>
         </h1>
         <p className="text-slate-400 text-sm tracking-[0.3em] font-bold uppercase">
-          高精拓扑地形引擎
+          高精拓扑地形引擎 // <span className="text-emerald-500">实时预览已开启</span>
         </p>
       </header>
 
@@ -191,6 +194,7 @@ const App: React.FC = () => {
                   onChange={(e) => setConfig({...config, density: parseInt(e.target.value)})}
                   className="w-full h-1 bg-slate-800 rounded-full appearance-none accent-indigo-500 cursor-pointer"
                 />
+                <p className="text-[9px] text-slate-600 italic">拖动滑块实时更新地形结构</p>
               </div>
 
               <div className="space-y-3">
@@ -212,7 +216,7 @@ const App: React.FC = () => {
                   disabled={isGenerating}
                   className="w-full bg-white text-black font-black py-4 rounded-2xl hover:bg-indigo-500 hover:text-white transition-all active:scale-95 shadow-xl disabled:opacity-50"
                 >
-                  {isGenerating ? '正在计算拓扑结构...' : '生成地形图'}
+                  {isGenerating ? '正在重新计算...' : '强制刷新地形'}
                 </button>
                 <div className="grid grid-cols-2 gap-4">
                   <button 
